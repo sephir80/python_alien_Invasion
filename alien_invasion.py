@@ -18,20 +18,28 @@ class AlienInvasion:
 
         self.ship = Ship(self)
 
+    def _check_events(self):
+        """Respond to keypress and mouse events"""
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+
+    def _update_screen(self):
+        """Update images on the screen, and flip to the new screen."""
+        # Ricolora lo schermo durante ogni loop.
+        self.screen.fill(self.settings.bg_color)
+        self.ship.blitme()
+        # Aggiorna lo schermo
+        pygame.display.flip()
+
+
     def run_game(self):
         """Start the main loop for the game."""
         while True:
             # Controlla eventi della tastiera ed del mouse
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
+            self._check_events()
+            self._update_screen()
 
-            # Ricolora lo schermo durante ogni loop.
-            self.screen.fill(self.settings.bg_color)
-            self.ship.blitme()
-
-            # Aggiorna lo schermo
-            pygame.display.flip()
 
 
 if __name__ == '__main__':
