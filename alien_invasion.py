@@ -12,10 +12,8 @@ class AlienInvasion:
         """Inizializza il gioco, e crea le risorse del gioco """
         pygame.init()
         self.settings = Settings()
-
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion")
-
         self.ship = Ship(self)
 
     def _check_events(self):
@@ -25,8 +23,10 @@ class AlienInvasion:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
-                    # Move the ship to right.
-                    self.ship.rect.x += 1
+                    self.ship.moving_right = True
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_RIGHT:
+                    self.ship.moving_right = False
 
 
     def _update_screen(self):
@@ -43,6 +43,7 @@ class AlienInvasion:
         while True:
             # Controlla eventi della tastiera ed del mouse
             self._check_events()
+            self.ship.update()
             self._update_screen()
 
 
